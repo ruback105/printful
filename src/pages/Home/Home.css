@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper h1 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.1rem;
+    text-align: center;
+}
+
+.wrapper .form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.wrapper .form :is(input, select) {
+    width: 100%;
+    padding: 5px;
+}
+
+.wrapper .form input {
+    margin-bottom: 5px;
+}
+
+.wrapper .form select {
+    border-radius: 5px;
+    color: #767676;
+    padding-left: 0;
+}
+
+.form .field {
+    position: relative;
+    padding-top: 20px;
+}
