@@ -10,7 +10,7 @@
 }
 
 section {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
 }
@@ -20,4 +20,6 @@ p.error {
     position: absolute;
     left: 0;
     top: 0;
+    white-space: nowrap;
+    width: 100%;
 }
