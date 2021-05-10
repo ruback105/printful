@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../components'
-import {
-  setQuizIdAction,
-  setUserAction,
-} from '../../actions'
+import { setQuizIdAction, setUserAction } from '../../actions'
 import { useDataLayerValue } from '../../DataLayer.js'
 import { useHistory } from 'react-router-dom'
 import './Home.css'
 
 const Home = () => {
-  const [{}, dispatch] = useDataLayerValue()
-
+  const [{ user, quizId }, dispatch] = useDataLayerValue()
   const [quizes, setQuizes] = useState({})
   const [userState, setUserState] = useState(null)
   const [quizIdState, setQuizIdState] = useState(null)

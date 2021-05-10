@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDataLayerValue } from '../../DataLayer.js'
+import { setQuizIdAction } from '../../actions'
 import './Result.css'
 
 const Result = () => {
@@ -12,7 +13,9 @@ const Result = () => {
       answersUrl += `&answers[]=${answer}`
     })
 
-    fetch(`https://printful.com/test-quiz.php?action=submit&quizId=${quizId}${answersUrl}`)
+    fetch(
+      `https://printful.com/test-quiz.php?action=submit&quizId=${quizId}${answersUrl}`,
+    )
       .then((res) => res.json())
       .then(
         (res) => {
@@ -22,13 +25,18 @@ const Result = () => {
           console.error(error)
         },
       )
+
+    setQuizIdAction(null, dispatch)
   }, [])
 
   return (
     <section className="test">
       <div className="wrapper">
         <h1 className="title">Thanks, {user}!</h1>
-        <p>Your responded correctly to {correctAnswersCount} out of {answers.length} quesitons</p>
+        <p>
+          Your responded correctly to {correctAnswersCount} out of{' '}
+          {answers.length} quesitons
+        </p>
       </div>
     </section>
   )

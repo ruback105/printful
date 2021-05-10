@@ -8,7 +8,6 @@ import './Test.css'
 
 const Test = () => {
   const [{ answers, quizId }, dispatch] = useDataLayerValue()
-
   const [questionIndex, setQuestionIndex] = useState(0)
   const [quizQuestions, setQuizQuestions] = useState({})
   const [questionAnswers, setQuestionAnswers] = useState(null)
@@ -20,7 +19,9 @@ const Test = () => {
   useEffect(() => {
     setAnswers([], dispatch)
 
-    fetch(`https://printful.com/test-quiz.php?action=questions&quizId=${quizId}`)
+    fetch(
+      `https://printful.com/test-quiz.php?action=questions&quizId=${quizId}`,
+    )
       .then((res) => res.json())
       .then(
         (res) => {
@@ -32,22 +33,24 @@ const Test = () => {
       )
   }, [])
 
-  useEffect(async () => {
-    quizQuestions[questionIndex] &&
-      (await fetch(
-        `https://printful.com/test-quiz.php?action=answers&quizId=${quizId}&questionId=${
-          quizQuestions[questionIndex].id
-        }}`,
-      )
-        .then((res) => res.json())
-        .then(
-          (res) => {
-            setQuestionAnswers(res)
-          },
-          (error) => {
-            console.log(error)
-          },
-        ))
+  useEffect(() => {
+    async function fetchData() {
+      quizQuestions[questionIndex] &&
+        (await fetch(
+          `https://printful.com/test-quiz.php?action=answers&quizId=${quizId}&questionId=${quizQuestions[questionIndex].id}}`,
+        )
+          .then((res) => res.json())
+          .then(
+            (res) => {
+              setQuestionAnswers(res)
+            },
+            (error) => {
+              console.log(error)
+            },
+          ))
+    }
+
+    fetchData()
   }, [quizQuestions[questionIndex]])
 
   const selectAnswer = (id, event) => {
@@ -63,7 +66,6 @@ const Test = () => {
   }
 
   const nextQuestion = () => {
-    console.log(document.querySelectorAll('.selected').length)
     if (document.querySelectorAll('.selected').length <= 0) {
       setErrors((prevErrors) => ({
         ...prevErrors,
