@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+State management: 
+For state management I'm using Context Api, for that I have setted up:
+1) Reducer - contains initial state and which consumes dispatch action type and payload
+2) DataLayer - passes data to reducer from actions
+3) Actions - contains function that dispatches action types and payloads
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To make states global index.js is wrapped with datalayer, containing initial state and reducer
 
-## Available Scripts
+In global states I save:
+1) User name - user enters it on the homepage
+2) QuizId - selected test id
+3) QuizQuestions - questions for the quiz
+4) Answers - user selected answers
 
-In the project directory, you can run:
+Routing:
+For routing I'm using react-router and react-router-dom, the App.js contains all routes. /test route is accessible only if user and quizId are set in a global state, /result route is accessible if user and answers are set in a global state.
 
-### `yarn start`
+Page/component combine:
+To easier import pages/components index.js is created under /pages /components root, that contains the necessary exports, thus all pages or all components can be imported in a single line.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Components:
+As the website is relatively small I didn't divide pages to a smaller components (like Questions->Question component, Answer components, etc.). The only component is Button component, that is used for all buttons on the website.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Pages:
+Pages are divided in 3 folders:
+1) Home - on component load all quizes are fetched and placed in select. User must enter name and choose option from select, before proceeding to the test, otherwise an error will be thrown, depending on the missing field. On clicking Start user is redirected to test page.
+2) Test - if state has user and quizId there the test page is opened, on component load quiz questions are fetched by using quizId in global state, quiz questions are saved using react useState. When the quiz quesitons are loaded another load is triggered and first question is fetched and rendered.
+When answer is selected and user clicks next, index of question is increased, next question is fetched and rendered until the last one. When the last one is answered then result page is loaded.
+If no answer is provided, then error message appears.
+3) Result - page can be opened if there are user and answers states. On component load answers url is built by concating answer ids from answers state, then correct answers count is fetched and rendered on the page. 
