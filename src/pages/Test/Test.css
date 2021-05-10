@@ -34,3 +34,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.test .wrapper p {
+    text-align: center;
+}
